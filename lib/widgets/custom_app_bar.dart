@@ -11,15 +11,16 @@ class AuthPageAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authAppBarHeight = MediaQuery.of(context).size.height * 0.2;
     final authAppBarWidth = MediaQuery.of(context).size.width;
     return Container(
-      height: authAppBarHeight,
+      height: 140.h,
       width: authAppBarWidth,
       color: Theme.of(context).scaffoldBackgroundColor,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
             icon:  Icon(
               Icons.arrow_back_ios,
               size: 32.w,

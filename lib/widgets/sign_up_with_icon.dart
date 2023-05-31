@@ -9,17 +9,15 @@ class SignUpWithSocialContainer extends StatelessWidget {
   SignUpWithSocialContainer({required this.imageUrl});
   @override
   Widget build(BuildContext context) {
-    final signUpWithSocialContainerHeight = MediaQuery.of(context).size.height * 0.1;
-    final signUpWithSocialContainerWidth = MediaQuery.of(context).size.width * 0.3;
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(30.r),
       ),
-      height: signUpWithSocialContainerHeight ,
-      width: signUpWithSocialContainerWidth,
+      height: 64.h ,
+      width: 92.w,
       child: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding:  EdgeInsets.symmetric(horizontal: 34.w, vertical: 20.h),
         child: Image.network(imageUrl),
       ),
     );

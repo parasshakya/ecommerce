@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'login_page.dart';
+import 'forgot_password.dart';
 
-class SignUpPage extends StatelessWidget {
+class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,18 +21,10 @@ class SignUpPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               AuthPageAppBar(
-                title: 'Sign Up',
+                title: ' Login',
               ),
               SizedBox(
                 height: 73.h,
-              ),
-              AuthPageTextField(
-                hintText: 'Name',
-                labelText: "Name",
-                isInputCorrect: true,
-              ),
-              SizedBox(
-                height: 8.h,
               ),
               AuthPageTextField(
                 hintText: 'Email',
@@ -56,9 +48,9 @@ class SignUpPage extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => LoginPage()));
+                            builder: (context) => ForgotPasswordPage()));
                       },
-                      child: Text('Already have an account? ',
+                      child: Text('Forgot your password? ',
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium!
@@ -72,18 +64,18 @@ class SignUpPage extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 28.h,
+                height: 32.h,
               ),
               CustomButton(
-                buttonText: "SIGN UP",
+                buttonText: "LOGIN",
                 buttonWidth: 343.w,
                 buttonHeight: 48.h,
               ),
               SizedBox(
-                height: 80.h,
+                height: 130.h,
               ),
               Text(
-                'Or sign up with social account',
+                'Or log in with social account',
                 style: Theme.of(context)
                     .textTheme
                     .bodyMedium!
@@ -100,7 +92,7 @@ class SignUpPage extends StatelessWidget {
                         'https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png',
                   ),
                   SizedBox(
-                    width: 16.w,
+                    width: 16.h,
                   ),
                   SignUpWithSocialContainer(
                     imageUrl:
