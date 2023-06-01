@@ -1,4 +1,7 @@
 // Name validator
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+
 String? validateName(String? value) {
   if (value!.isEmpty) {
     return 'Please enter your name';
@@ -37,3 +40,9 @@ String? validatePassword(String? value) {
   }
   return null;
 }
+
+void showSnackBar(String message, BuildContext context){
+  ScaffoldMessenger.of(context)..removeCurrentSnackBar()..showSnackBar(SnackBar( backgroundColor: Colors.red.shade800,content: Center(child: Text(message))));
+
+}
+

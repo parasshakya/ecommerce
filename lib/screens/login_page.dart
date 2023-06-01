@@ -1,18 +1,45 @@
-import 'package:ecommerce/helper_function.dart';
+import 'package:ecommerce/helper_function.dart' as helper;
 import 'package:ecommerce/themes.dart';
 import 'package:ecommerce/widgets/custom_app_bar.dart';
 import 'package:ecommerce/widgets/custom_button.dart';
 import 'package:ecommerce/widgets/custom_text_form_field.dart';
 import 'package:ecommerce/widgets/sign_up_with_icon.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'forgot_password.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
 
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+
+  bool isLoading = false;
+
+  Future<void> firebaseSignIn({required String email, required String password}) async {
+
+    setState(() {
+      isLoading = true;
+    });
+    try{
+      await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+    } on FirebaseAuthException catch(e){
+      helper.showSnackBar(e.code, context);
+    }
+    setState(() {
+      isLoading = false;
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -27,21 +54,24 @@ class LoginPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 AuthPageAppBar(
+
                   title: ' Login',
                 ),
                 SizedBox(
                   height: 73.h,
                 ),
                 AuthPageTextField(
+                  textEditingController: emailController,
                  textFieldType: TextFieldType.textFieldEmail,
-                  validator: validateEmail,
+                  validator: helper.validateEmail,
                 ),
                 SizedBox(
                   height: 8.h,
                 ),
                 AuthPageTextField(
+                  textEditingController: passwordController,
                  textFieldType: TextFieldType.textFieldPassword,
-                  validator: validatePassword,
+                  validator: helper.validatePassword,
                   obscureText: true,
 
                 ),
@@ -64,7 +94,7 @@ class LoginPage extends StatelessWidget {
                       ),
                       Icon(
                         Icons.arrow_right_alt,
-                        color: Colors.red.shade900,
+                        color: Colors.red.shade800,
                       )
                     ],
                   ),
@@ -76,11 +106,10 @@ class LoginPage extends StatelessWidget {
                   buttonText: "LOGIN",
                   buttonWidth: 343.w,
                   buttonHeight: 48.h,
+                  isLoading: isLoading,
                   onPressed: (){
                     if(_formKey.currentState!.validate()){
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Login Successful'),));
-                    }else{
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Login Failed')));
+                      firebaseSignIn(email: emailController.text.trim(), password: passwordController.text.trim());
                     }
                   },
                 ),

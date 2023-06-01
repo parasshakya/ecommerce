@@ -1,3 +1,4 @@
+import 'package:ecommerce/helper_function.dart' as helper;
 import 'package:ecommerce/themes.dart';
 import 'package:ecommerce/widgets/custom_app_bar.dart';
 import 'package:ecommerce/widgets/custom_button.dart';
@@ -9,8 +10,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ForgotPasswordPage extends StatelessWidget {
 
+  final forgotPasswordFieldController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
+
+  ForgotPasswordPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +38,8 @@ class ForgotPasswordPage extends StatelessWidget {
                 SizedBox(height: 16.h,),
                 AuthPageTextField( textFieldType: TextFieldType.textFieldEmail,
                 validator: validateEmail,
+                  textEditingController: forgotPasswordFieldController,
+
                 ),
                 SizedBox(height: 63.h,),
                 CustomButton(
@@ -42,9 +48,10 @@ class ForgotPasswordPage extends StatelessWidget {
                   buttonHeight: 43.h,
                   onPressed: (){
                     if(_formKey.currentState!.validate()){
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Reset link sent to your email'),));
+                      helper.showSnackBar('Reset link sent to ${forgotPasswordFieldController.text.trim()} ', context);
                     }else{
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Reset link failed to send')));
+                      helper.showSnackBar('Reset link failed to send ', context);
+
                     }
                   },
                 ),

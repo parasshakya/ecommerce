@@ -1,21 +1,48 @@
-import 'package:ecommerce/helper_function.dart';
+import 'package:ecommerce/helper_function.dart ' as helper;
 import 'package:ecommerce/themes.dart';
 import 'package:ecommerce/widgets/custom_app_bar.dart';
 import 'package:ecommerce/widgets/custom_button.dart';
 import 'package:ecommerce/widgets/custom_text_form_field.dart';
 import 'package:ecommerce/widgets/sign_up_with_icon.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'login_page.dart';
 
-class SignUpPage extends StatelessWidget {
+class SignUpPage extends StatefulWidget {
 
+  @override
+  State<SignUpPage> createState() => _SignUpPageState();
+}
+
+class _SignUpPageState extends State<SignUpPage> {
   final _formKey = GlobalKey<FormState>();
+
   final emailController = TextEditingController();
+
   final passwordController = TextEditingController();
+
   final nameController = TextEditingController();
+
+  bool isLoading = false;
+
+  Future<void> firebaseSignUp({required String email, required String password}) async {
+
+    setState(() {
+      isLoading = true;
+    });
+    try{
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+    } on FirebaseAuthException catch(e){
+      helper.showSnackBar(e.code, context);
+    }
+    setState(() {
+      isLoading = false;
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +64,7 @@ class SignUpPage extends StatelessWidget {
                 ),
                 AuthPageTextField(
                   textEditingController: emailController,
-                  validator: validateEmail,
+                  validator: helper.validateEmail,
                   textFieldType: TextFieldType.textFieldEmail,
                 ),
                 SizedBox(
@@ -45,14 +72,14 @@ class SignUpPage extends StatelessWidget {
                 ),
                 AuthPageTextField(
                   textEditingController: nameController,
-                  validator: validateName,
+                  validator: helper.validateName,
                   textFieldType: TextFieldType.textFieldName,
                 ),
                 SizedBox(
                   height: 8.h,
                 ),
                 AuthPageTextField(
-                  validator: validatePassword,
+                  validator: helper.validatePassword,
                   textEditingController: passwordController,
                   textFieldType: TextFieldType.textFieldPassword,
                   obscureText: true,
@@ -76,7 +103,7 @@ class SignUpPage extends StatelessWidget {
                       ),
                       Icon(
                         Icons.arrow_right_alt,
-                        color: Colors.red.shade900,
+                        color: Colors.red.shade800,
                       )
                     ],
                   ),
@@ -86,13 +113,12 @@ class SignUpPage extends StatelessWidget {
                 ),
                 CustomButton(
                   buttonText: "SIGN UP",
+                  isLoading: isLoading,
                   buttonWidth: 343.w,
                   buttonHeight: 48.h,
                   onPressed: (){
                     if(_formKey.currentState!.validate()){
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Sign Up Successful'),));
-                    }else{
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Sign Up Failed')));
+                      firebaseSignUp(email: emailController.text.trim(), password: passwordController.text.trim());
                     }
                   },
                 ),
@@ -132,6 +158,4 @@ class SignUpPage extends StatelessWidget {
       ),
     );
   }
-
-
 }
