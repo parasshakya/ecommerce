@@ -8,7 +8,7 @@ class EcommerceThemes {
       elevation: 0,
       titleTextStyle: GoogleFonts.metrophobic(
         color: Colors.black,
-        fontSize: 40.sp,
+        fontSize: 34.sp,
         fontWeight: FontWeight.bold,
       ));
 
