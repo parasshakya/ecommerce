@@ -110,6 +110,7 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: (){
                     if(_formKey.currentState!.validate()){
                       firebaseSignIn(email: emailController.text.trim(), password: passwordController.text.trim());
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
                     }
                   },
                 ),
