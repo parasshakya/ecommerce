@@ -11,47 +11,50 @@ class Section extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Theme.of(context).scaffoldBackgroundColor,
-      child: Column(
-        children: [
-          Padding(
-            padding:  EdgeInsets.only(left: 18.w, right: 14.w, bottom: 22.h),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 34.sp),
-                    ),
-                    Text(
-                      subtitle,
-                      style:
-                          TextStyle(fontSize: 11.sp, color: Colors.grey.shade200),
-                    )
-                  ],
-                ),
-                Text(
-                  'View all',
-                  style: TextStyle(fontSize: 11.sp),
-                )
-              ],
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding:  EdgeInsets.only(left: 18.w, right: 14.w, bottom: 22.h),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 34.sp),
+                  ),
+                  Text(
+                    subtitle,
+                    style:
+                        TextStyle(fontSize: 11.sp, color: Colors.grey),
+                  )
+                ],
+              ),
+              Text(
+                'View all',
+                style: TextStyle(fontSize: 11.sp),
+              )
+            ],
           ),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
+        ),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: children,
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
+
+
 }

@@ -13,74 +13,111 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 260.h,
-      width: 150.w,
-      child: Column(
+    return Padding(
+      padding:  EdgeInsets.symmetric(horizontal: 16.sp),
+      child: Stack(
         children: [
-          Stack(
-            children: [
-              
-                if(product.discount.isNotEmpty) Positioned(
-                  top: 8.h, left: 9.w,
-                  child: CustomButton(buttonText: product.discount , buttonHeight: 28.h , buttonWidth: 40.w, onPressed: (){
+          Container(
+            height: 260.h,
 
-                  }),
-                ),
+            width: 150.w,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Stack(
+                    children: [
 
-                Positioned(
-                  left: 112.w,
-                  top: 164.h,
-                  child: Container(
-                    height: 36.h,
-                    width: 36.w,
-                    child:  CircleAvatar(
-                      child: Icon(Icons.favorite_border_outlined, size: 24.sp,),
-                    ),
+
+
+
+
+                      Positioned(
+                        top: 0,
+                        child: Container(
+                          height: 184.h,
+                          width: 148.w,
+                          child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: Image.network(product.imageUrl, fit: BoxFit.cover,)),
+                        ),
+                      ),
+
+                      if(product.discount.isNotEmpty) Positioned(
+                        top: 8.h, left: 9.w,
+                        child: CustomButton(buttonText:  '-${double.parse(product.discount) / double.parse(product.price) * 100 }%', buttonHeight: 28.h , buttonWidth: 40.w, onPressed: (){
+
+                        }),
+                      ),
+
+
+                    ],
                   ),
                 ),
+                Wrap(
+                  children: [
+                      RatingBar(
+                        itemSize: 14.sp,
+                          maxRating: 5,
+                          minRating: 0,
+                          itemCount: 5,
 
+                          initialRating: double.parse(product.rating),
 
-                Positioned(
-                  top: 0,
-                  child: Container(
-                    height: 184.h,
-                    width: 148.w,
-                    child: ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: Image.network(product.imageUrl)),
-                  ),
+                          ratingWidget: RatingWidget(
+                        half: Icon(Icons.star_half),
+                        empty: Icon(Icons.star_border_outlined, color: Colors.grey,),
+                        full: Icon(Icons.star, color: Colors.yellow.shade800,)
+                      ), onRatingUpdate: _saveRating),
+                    Text(' (${product.reviews.length})', style: TextStyle(
+                      fontSize: 10.sp,
+                        color: Colors.grey
+                    ),)
+                  ],
                 ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
 
-                
-            ],
+                  children: [
+                    Text(product.name, style: TextStyle(
+                      fontSize: 11.sp,
+                      color: Colors.grey
+                    ),),
+                    Text(product.category, style: TextStyle(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.bold
+                    ),),
+                    Text('${product.price}\$', style: TextStyle(
+                      fontSize: 14.sp,
+
+                    ),)
+                  ],
+                )
+              ],
+            ),
           ),
-          Wrap(
-            children: [
-                RatingBar(
-                    maxRating: 5,
-                    minRating: 0,
-                    itemCount: double.parse(product.rating).toInt(),
-                    ratingWidget: RatingWidget(
-                  half: Icon(Icons.star_half),
-                  empty: Icon(Icons.star_border_outlined),
-                  full: Icon(Icons.star)
-                ), onRatingUpdate: _saveRating),
-              Text(' (${product.reviews.length})')
-            ],
+          Positioned(
+            left: 113.w,
+            top: 164.h,
+            bottom: 60.h,
+            right: 1.w,
+            child: Container(
+              height: 36.h,
+              width: 36.w,
+              child:  CircleAvatar(
+                backgroundColor: Colors.white,
+                child: Padding(
+                  padding:  EdgeInsets.all(6.0.sp),
+                  child: Icon(Icons.favorite_border_outlined, size: 24.sp, color: Colors.grey,),
+                ),
+              ),
+            ),
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(product.name),
-              Text(product.category),
-              Text(product.price)
-            ],
-          )
         ],
       ),
     );
   }
+
 
   void _saveRating(double rating){
 

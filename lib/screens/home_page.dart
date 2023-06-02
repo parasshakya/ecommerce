@@ -1,3 +1,4 @@
+import 'package:ecommerce/providers/product_provider.dart';
 import 'package:ecommerce/widgets/custom_button.dart';
 import 'package:ecommerce/widgets/product_card.dart';
 import 'package:ecommerce/widgets/section.dart';
@@ -5,6 +6,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+
+import '../models/product.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -23,6 +27,65 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  final _listOfProductCards = [
+    ProductCard(
+        product:Product(
+            section: "new",
+            reviews: ["nice"],
+            rating: '4',
+            price: '500',
+            discount: '10',
+            category: 'trousers',
+            name: 'Cool',
+            imageUrl: 'https://www.gingerandsmart.com/cdn/shop/products/Ginger_Smart_PreFall22Collection_TerrazzoBlouse_2_600x.jpg?v=1654221286',
+            id: '3'
+
+        )
+    ),
+    ProductCard(
+        product:Product(
+            section: "new",
+            reviews: ["nice"],
+            rating: '4',
+            price: '500',
+            discount: '10',
+            category: 'trousers',
+            name: 'Cool',
+            imageUrl: 'https://www.gingerandsmart.com/cdn/shop/products/Ginger_Smart_PreFall22Collection_TerrazzoBlouse_2_600x.jpg?v=1654221286',
+            id: '3'
+
+        )
+    ),
+    ProductCard(
+        product:Product(
+            section: "new",
+            reviews: ["nice"],
+            rating: '4',
+            price: '500',
+            discount: '10',
+            category: 'trousers',
+            name: 'Cool',
+            imageUrl: 'https://www.gingerandsmart.com/cdn/shop/products/Ginger_Smart_PreFall22Collection_TerrazzoBlouse_2_600x.jpg?v=1654221286',
+            id: '3'
+
+        )
+    ),
+    ProductCard(
+        product:Product(
+            section: "new",
+            reviews: ["nice"],
+            rating: '4',
+            price: '500',
+            discount: '10',
+            category: 'trousers',
+            name: 'Cool',
+            imageUrl: 'https://www.gingerandsmart.com/cdn/shop/products/Ginger_Smart_PreFall22Collection_TerrazzoBlouse_2_600x.jpg?v=1654221286',
+            id: '3'
+
+        )
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +94,7 @@ class _HomePageState extends State<HomePage> {
           SliverAppBar(
 
             expandedHeight: 536.h,
-            collapsedHeight: 196.h,
+            collapsedHeight: 230.h,
             backgroundColor: Colors.grey.shade200,
             flexibleSpace: Stack(
               children: [
@@ -78,7 +141,21 @@ class _HomePageState extends State<HomePage> {
             child: Section(
               title: "Sale",
               subtitle: "Hurry up and buy",
-              children: listOfProductCards,
+              children: _listOfProductCards,
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: SizedBox(
+              height: 40.h,
+
+            ),
+          ),
+
+          SliverToBoxAdapter(
+            child: Section(
+              title: "New",
+              subtitle: "All new designs",
+              children: _listOfProductCards,
             ),
           )
         ],
@@ -102,20 +179,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  List<ProductCard> listOfProductCards = [
 
-  ];
 
-  Widget buildImages() {
-    return SliverGrid.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2, mainAxisSpacing: 10.h, crossAxisSpacing: 5.w),
-      itemBuilder: (context, index) => Container(
-        color: Colors.red.shade800,
-        width: 34.w,
-        height: 34.h,
-      ),
-      itemCount: 20,
-    );
-  }
 }
