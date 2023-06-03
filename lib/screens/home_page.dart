@@ -142,7 +142,7 @@ class _HomePageState extends State<HomePage> {
           
           SliverToBoxAdapter(
             child: StreamBuilder<List<Product>>(
-              stream: ProductProvider.getProducts(),
+              stream: ProductProvider.getProductsOnSale(),
               builder: (context, snapshot) {
                 if(snapshot.hasData){
                   final data = snapshot.data;
@@ -170,7 +170,7 @@ class _HomePageState extends State<HomePage> {
 
           SliverToBoxAdapter(
             child: StreamBuilder<List<Product>>(
-                stream: ProductProvider.getProducts(),
+                stream: ProductProvider.getNewProducts(),
                 builder: (context, snapshot) {
                   if(snapshot.hasData){
                     final data = snapshot.data;
