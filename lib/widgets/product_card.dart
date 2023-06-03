@@ -19,7 +19,6 @@ class ProductCard extends StatelessWidget {
         children: [
           Container(
             height: 260.h,
-
             width: 150.w,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,7 +44,9 @@ class ProductCard extends StatelessWidget {
 
                       if(product.discount.isNotEmpty) Positioned(
                         top: 8.h, left: 9.w,
-                        child: CustomButton(buttonText:  '-${double.parse(product.discount) / double.parse(product.price) * 100 }%', buttonHeight: 28.h , buttonWidth: 40.w, onPressed: (){
+                        child: CustomButton(buttonTextStyle: TextStyle(
+                          fontSize: 11.sp, color: Colors.white
+                        ),buttonText:  '-${double.parse(product.discount) / double.parse(product.price) * 100 }%', buttonHeight: 24.h , buttonWidth: 40.w, onPressed: (){
 
                         }),
                       ),
@@ -87,7 +88,16 @@ class ProductCard extends StatelessWidget {
                       fontSize: 16.sp,
                       fontWeight: FontWeight.bold
                     ),),
-                    Text('${product.price}\$', style: TextStyle(
+                    if(product.discount.isNotEmpty) RichText(
+
+                      text: TextSpan(
+                      children: [
+                        TextSpan(text: '${product.price}\$', style: TextStyle(decoration: TextDecoration.lineThrough, fontSize: 14.sp, color: Colors.grey,
+                        )),
+                        TextSpan(text: '${product.discount}\$', style: TextStyle(fontSize: 14.sp, color: Colors.red.shade800)),
+                      ]
+                    ), ),
+                    if(product.discount.isEmpty) Text('${product.price}\$', style: TextStyle(
                       fontSize: 14.sp,
 
                     ),)

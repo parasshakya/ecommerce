@@ -18,6 +18,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+
   Future<void> firebaseSignOut() async {
     try {
       await FirebaseAuth.instance.signOut();
@@ -86,6 +88,7 @@ class _HomePageState extends State<HomePage> {
     ),
   ];
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -138,10 +141,24 @@ class _HomePageState extends State<HomePage> {
           ),
           
           SliverToBoxAdapter(
-            child: Section(
-              title: "Sale",
-              subtitle: "Hurry up and buy",
-              children: _listOfProductCards,
+            child: StreamBuilder<List<Product>>(
+              stream: ProductProvider.getProducts(),
+              builder: (context, snapshot) {
+                if(snapshot.hasData){
+                  final data = snapshot.data;
+                  final listOfProductCards = data!.map((e) => ProductCard(product: e,)).toList();
+                  return Section(
+                    title: "Sale",
+                    subtitle: "Hurry up and buy",
+                    children: listOfProductCards,
+                  );
+                }else if (snapshot.hasError){
+                  return const Center(child: Text('Something went wrong'),);
+                }else{
+                  return const Center(child: CircularProgressIndicator(),);
+                }
+
+              }
             ),
           ),
           SliverToBoxAdapter(
@@ -152,12 +169,26 @@ class _HomePageState extends State<HomePage> {
           ),
 
           SliverToBoxAdapter(
-            child: Section(
-              title: "New",
-              subtitle: "All new designs",
-              children: _listOfProductCards,
+            child: StreamBuilder<List<Product>>(
+                stream: ProductProvider.getProducts(),
+                builder: (context, snapshot) {
+                  if(snapshot.hasData){
+                    final data = snapshot.data;
+                    final listOfProductCards = data!.map((e) => ProductCard(product: e,)).toList();
+                    return Section(
+                      title: "New",
+                      subtitle: "All new designs",
+                      children: listOfProductCards,
+                    );
+                  }else if (snapshot.hasError){
+                    return const Center(child: Text('Something went wrong'),);
+                  }else{
+                    return const Center(child: CircularProgressIndicator(),);
+                  }
+
+                }
             ),
-          )
+          ),
         ],
         // child: Column(
         //   mainAxisAlignment: MainAxisAlignment.start,

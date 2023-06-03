@@ -8,8 +8,10 @@ class CustomButton extends StatelessWidget {
   final double buttonHeight;
   final Function onPressed;
   final bool isLoading;
+  final EdgeInsetsGeometry? padding;
+  final TextStyle? buttonTextStyle;
 
-  CustomButton({this.isLoading = false, required this.buttonText, required this.buttonHeight, required this.buttonWidth, required this.onPressed});
+  const CustomButton({super.key, this.buttonTextStyle,this.padding ,this.isLoading = false, required this.buttonText, required this.buttonHeight, required this.buttonWidth, required this.onPressed});
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -17,6 +19,7 @@ class CustomButton extends StatelessWidget {
         onPressed();
       },
       child: Container(
+        padding: padding ,
         width: buttonWidth,
         height: buttonHeight,
         decoration: BoxDecoration(
@@ -25,7 +28,7 @@ class CustomButton extends StatelessWidget {
 
 
         ),
-        child: Center(child: isLoading ? const CircularProgressIndicator() : Text(buttonText, style: TextStyle(fontSize: 14.sp, color: Colors.white),)),
+        child: Center(child: isLoading ? const CircularProgressIndicator() : Center(child: Text(buttonText, style:  buttonTextStyle ??  TextStyle(fontSize: 14.sp, color: Colors.white),))),
 
 
       ),
