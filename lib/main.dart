@@ -15,7 +15,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(create: (context) => ProductProvider(), child: const MyApp(),));
 }
 
 class MyApp extends StatelessWidget {
@@ -33,7 +33,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.grey.shade200,
-        textTheme: EcommerceThemes.bodyText2Theme,
+        textTheme: EcommerceThemes.ecomTheme,
+
       ),
       home:  const AuthPage(),
     ),

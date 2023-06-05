@@ -12,9 +12,15 @@ class EcommerceThemes {
         fontWeight: FontWeight.bold,
       ));
 
-  static final bodyText2Theme = TextTheme(
+  static final ecomTheme = TextTheme(
       bodyMedium: GoogleFonts.metrophobic(
     fontSize: 20.sp,
         fontWeight: FontWeight.w600
-  ));
+  ),
+  titleMedium: GoogleFonts.metrophobic(
+      fontSize: 16.sp
+  )
+  );
+
+
 }

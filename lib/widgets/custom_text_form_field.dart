@@ -5,11 +5,14 @@ class AuthPageTextField extends StatefulWidget {
   final TextFieldType? textFieldType;
 
   final FormFieldValidator<String>? validator;
+  final String? hintText;
 
   AuthPageTextField({this.textFieldType,
     this.validator,
     this.textEditingController,
-    this.obscureText = false});
+    this.obscureText = false,
+    this.hintText,
+  });
 
   final TextEditingController? textEditingController;
   final bool obscureText;
@@ -78,7 +81,7 @@ class _AuthPageTextFieldState extends State<AuthPageTextField> {
               ? 'Name'
               : widget.textFieldType == TextFieldType.textFieldPassword
               ? "Password"
-              : '',
+              : widget.hintText,
           labelText: widget.textFieldType == TextFieldType.textFieldEmail
               ? 'Email'
               : widget.textFieldType == TextFieldType.textFieldName

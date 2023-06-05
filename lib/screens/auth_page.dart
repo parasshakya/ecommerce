@@ -1,3 +1,4 @@
+import 'package:ecommerce/screens/main_screen.dart';
 import 'package:ecommerce/screens/productCardTestScreen.dart';
 import 'package:ecommerce/screens/sign_up_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,7 +16,7 @@ class AuthPage extends StatelessWidget {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if(snapshot.hasData){
-            return HomePage();
+            return MainScreen();
           }
           else{
             return SignUpPage();

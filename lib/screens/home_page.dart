@@ -29,64 +29,6 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  final _listOfProductCards = [
-    ProductCard(
-        product:Product(
-            section: "new",
-            reviews: ["nice"],
-            rating: '4',
-            price: '500',
-            discount: '10',
-            category: 'trousers',
-            name: 'Cool',
-            imageUrl: 'https://www.gingerandsmart.com/cdn/shop/products/Ginger_Smart_PreFall22Collection_TerrazzoBlouse_2_600x.jpg?v=1654221286',
-            id: '3'
-
-        )
-    ),
-    ProductCard(
-        product:Product(
-            section: "new",
-            reviews: ["nice"],
-            rating: '4',
-            price: '500',
-            discount: '10',
-            category: 'trousers',
-            name: 'Cool',
-            imageUrl: 'https://www.gingerandsmart.com/cdn/shop/products/Ginger_Smart_PreFall22Collection_TerrazzoBlouse_2_600x.jpg?v=1654221286',
-            id: '3'
-
-        )
-    ),
-    ProductCard(
-        product:Product(
-            section: "new",
-            reviews: ["nice"],
-            rating: '4',
-            price: '500',
-            discount: '10',
-            category: 'trousers',
-            name: 'Cool',
-            imageUrl: 'https://www.gingerandsmart.com/cdn/shop/products/Ginger_Smart_PreFall22Collection_TerrazzoBlouse_2_600x.jpg?v=1654221286',
-            id: '3'
-
-        )
-    ),
-    ProductCard(
-        product:Product(
-            section: "new",
-            reviews: ["nice"],
-            rating: '4',
-            price: '500',
-            discount: '10',
-            category: 'trousers',
-            name: 'Cool',
-            imageUrl: 'https://www.gingerandsmart.com/cdn/shop/products/Ginger_Smart_PreFall22Collection_TerrazzoBlouse_2_600x.jpg?v=1654221286',
-            id: '3'
-
-        )
-    ),
-  ];
 
 
   @override
