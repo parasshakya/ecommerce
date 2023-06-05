@@ -46,7 +46,7 @@ class ProductCard extends StatelessWidget {
                     top: 8.h, left: 9.w,
                     child: CustomButton(buttonTextStyle: TextStyle(
                       fontSize: 11.sp, color: Colors.white
-                    ),buttonText:  '-${double.parse(product.discount) / double.parse(product.price) * 100 }%', buttonHeight: 24.h , buttonWidth: 40.w, onPressed: (){
+                    ),buttonText:  '${(double.parse(product.discount) / double.parse(product.price) * 100 ).toInt()}%', buttonHeight: 24.h , buttonWidth: 40.w, onPressed: (){
 
                     }),
                   ),
