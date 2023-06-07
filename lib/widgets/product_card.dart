@@ -42,11 +42,11 @@ class ProductCard extends StatelessWidget {
 
 
 
-                  if(product.discount.isNotEmpty) Positioned(
+                  if(product.discount != 0) Positioned(
                     top: 8.h, left: 9.w,
                     child: CustomButton(buttonTextStyle: TextStyle(
                       fontSize: 11.sp, color: Colors.white
-                    ),buttonText:  '${(double.parse(product.discount) / double.parse(product.price) * 100 ).toInt()}%', buttonHeight: 24.h , buttonWidth: 40.w, onPressed: (){
+                    ),buttonText:  '-${((product.discount / product.price) * 100).toStringAsPrecision(2)}%', buttonHeight: 24.h , buttonWidth: 40.w, onPressed: (){
 
                     }),
                   ),
@@ -81,10 +81,10 @@ class ProductCard extends StatelessWidget {
                       minRating: 0,
                       itemCount: 5,
 
-                      initialRating: double.parse(product.rating),
+                      initialRating: product.rating.toDouble(),
 
                       ratingWidget: RatingWidget(
-                    half: Icon(Icons.star_half),
+                    half: Icon(Icons.star_half, color: Colors.yellow.shade800),
                     empty: Icon(Icons.star_border_outlined, color: Colors.grey,),
                     full: Icon(Icons.star, color: Colors.yellow.shade800,)
                   ), onRatingUpdate: _saveRating),
@@ -95,32 +95,33 @@ class ProductCard extends StatelessWidget {
 
               ],
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            FittedBox(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
 
-              children: [
-                Text(product.name, style: TextStyle(
-                  fontSize: 11.sp,
-                  color: Colors.grey
-                ),),
-                Text(product.category, style: TextStyle(
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.bold
-                ),),
-                if(product.discount.isNotEmpty) RichText(
+                children: [
+                  Text(product.name, style: TextStyle(
+                    fontSize: 11.sp,
+                    color: Colors.grey
+                  ),),
+                  Text(product.category, style: TextStyle(
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.bold
+                  ),),
+                  if(product.discount != 0) RichText(
 
-                  text: TextSpan(
-                  children: [
-                    TextSpan(text: '${product.price}\$', style: TextStyle(decoration: TextDecoration.lineThrough, fontSize: 14.sp, color: Colors.grey,
-                    )),
-                    TextSpan(text: '${int.parse(product.price) - int.parse(product.discount)}\$', style: TextStyle(fontSize: 14.sp, color: Colors.red.shade800)),
-                  ]
-                ), ),
-                if(product.discount.isEmpty) Text('${product.price}\$', style: TextStyle(
-                  fontSize: 14.sp,
-
-                ),)
-              ],
+                    text: TextSpan(
+                    children: [
+                      TextSpan(text: '${product.price}\$', style: TextStyle(decoration: TextDecoration.lineThrough, fontSize: 14.sp, color: Colors.grey,
+                      )),
+                      TextSpan(text: '${(product.price - product.discount)}\$', style: TextStyle(fontSize: 14.sp, color: Colors.red.shade800)),
+                    ]
+                  ), ),
+                  if(product.discount == 0) Text('${product.price}\$', style: TextStyle(
+                    fontSize: 14.sp,
+                  ),)
+                ],
+              ),
             )
           ],
         ),

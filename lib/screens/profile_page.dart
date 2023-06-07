@@ -36,8 +36,9 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -77,13 +78,13 @@ class _ProfilePageState extends State<ProfilePage> {
                     isLoading: _isLoading,
                     onPressed: () {
                       addProductToFirestore(
-                          idController.text.trim(),
+                          int.parse(idController.text.trim()),
                           categoryController.text.trim(),
                           nameController.text.trim(),
-                          priceController.text.trim(),
-                          discountController.text.trim(),
+                          int.parse(priceController.text.trim()),
+                          int.parse(discountController.text.trim() ),
                           imageUrlController.text.trim(),
-                          ratingController.text.trim(),
+                          double.parse(ratingController.text.trim()),
                           reviewsController.text.split(','),
                           sectionController.text.trim());
                     })
@@ -95,13 +96,13 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Future<void> addProductToFirestore(String id,
+  Future<void> addProductToFirestore(int id,
       String category,
       String name,
-      String price,
-      String discount,
+      int price,
+      int discount,
       String imageUrl,
-      String rating,
+      double rating,
       List<String> reviews,
       String section) async {
 

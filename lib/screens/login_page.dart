@@ -1,4 +1,5 @@
 import 'package:ecommerce/helper_function.dart' as helper;
+import 'package:ecommerce/screens/main_screen.dart';
 import 'package:ecommerce/themes.dart';
 import 'package:ecommerce/widgets/custom_app_bar.dart';
 import 'package:ecommerce/widgets/custom_button.dart';
@@ -10,6 +11,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'forgot_password.dart';
+import 'home_page.dart';
 
 class LoginPage extends StatefulWidget {
 
@@ -110,7 +112,7 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: (){
                     if(_formKey.currentState!.validate()){
                       firebaseSignIn(email: emailController.text.trim(), password: passwordController.text.trim());
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const MainScreen()));
                     }
                   },
                 ),

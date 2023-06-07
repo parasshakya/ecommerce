@@ -91,21 +91,24 @@ class _FilterWidgetState extends State<FilterWidget> {
   }
 
   Widget buildListTile(String title, int index) {
-    return ListTile(
-        title: Text(
-          title,
-          style: TextStyle(
-            color: selectedTileIndex == index ? Colors.white : Colors.black
+    return Container(
+      height: 48.h,
+      color: selectedTileIndex == index ? Colors.red : Colors.white,
+      child: ListTile(
+          title: Text(
+            title,
+            style: TextStyle(
+              color: selectedTileIndex == index ? Colors.white : Colors.black
+            ),
+
           ),
+        onTap: (){
+            setState(() {
+              selectedTileIndex = index;
+            });
+        },
 
-        ),
-        tileColor: selectedTileIndex == index ? Colors.red : Colors.white,
-      onTap: (){
-          setState(() {
-            selectedTileIndex = index;
-          });
-      },
-
+      ),
     );
   }
 }

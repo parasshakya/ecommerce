@@ -40,4 +40,35 @@ class AuthPageAppBar extends StatelessWidget {
   }
 }
 
+class MainAppBar extends StatelessWidget {
+
+  final String? appBarTitle;
+  final Icon? actionIcon;
+  final Function()? onBackButtonPressed;
+  final Function()? onActionIconPressed;
+
+
+  MainAppBar({ this.onBackButtonPressed, this.actionIcon, this.appBarTitle, this.onActionIconPressed});
+
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      title:  Text(appBarTitle ?? ''),
+      backgroundColor: Colors.white,
+      foregroundColor: Colors.black,
+      centerTitle: true,
+      elevation: 1,
+      leading: IconButton(
+        onPressed: onBackButtonPressed,
+        icon: const Icon(Icons.arrow_back_ios_new),
+      ),
+      actions: [
+        actionIcon == null ? Text('') : IconButton(onPressed: onActionIconPressed, icon: actionIcon! )
+
+
+      ],
+    );
+  }
+}
 

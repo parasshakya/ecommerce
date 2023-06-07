@@ -1,5 +1,6 @@
 import 'package:ecommerce/providers/product_provider.dart';
 import 'package:ecommerce/screens/catalog_page.dart';
+import 'package:ecommerce/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -26,7 +27,9 @@ class _ShopPageState extends State<ShopPage> {
         elevation: 0,
         centerTitle: true,
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainScreen()));
+          },
           icon: const Icon(Icons.arrow_back_ios_new),
         ),
         actions: [
@@ -54,8 +57,8 @@ class _ShopPageState extends State<ShopPage> {
                 )),
             SizedBox(height: 32.h,),
             Expanded(
-              child: StreamBuilder<List<String>>(
-                stream: ProductProvider.getAllCategoriesFromFirestore(),
+              child: FutureBuilder<List<String>>(
+                future: ProductProvider.getAllCategoriesFromProducts(),
                 builder: (context, snapshot) {
                   if(snapshot.hasData){
 

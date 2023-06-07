@@ -5,49 +5,61 @@ import 'package:flutter/material.dart';
 import '../models/product.dart';
 import '../widgets/product_card.dart';
 
-class ProductProvider extends ChangeNotifier {
+class ProductProvider  {
 
-  List<String> _categoryList = [];
+  List<Product> _listOfProductsFromCategory = [];
 
-  List<String> get getCategories => _categoryList;
 
-  static Stream<List<Product>> getAllProducts() =>
-      FirebaseFirestore.instance
-          .collection('products')
-          .snapshots()
-          .map((snapshot) =>
-          snapshot.docs.map((doc) => Product.fromJson(doc.data())).toList());
 
-  static Stream<List<Product>> getProductsOnSale() =>
-      FirebaseFirestore.instance
+
+  static Future<List<Product>> getProductsOnSale() async {
+
+      final querySnapshot = await FirebaseFirestore.instance
           .collection('products')
           .where("section", isEqualTo: 'sale')
-          .snapshots()
-          .map((snapshot) =>
-          snapshot.docs.map((doc) => Product.fromJson(doc.data())).toList());
+          .get();
+      return querySnapshot.docs
+          .map((doc) => Product.fromJson(doc.data()))
+          .toList();
 
-  static Stream<List<Product>> getNewProducts() =>
-      FirebaseFirestore.instance
-          .collection('products')
-          .where("section", isEqualTo: 'new')
-          .snapshots()
-          .map((snapshot) =>
-          snapshot.docs.map((doc) => Product.fromJson(doc.data())).toList());
+  }
 
-  static Stream<List<String>> getAllCategoriesFromFirestore() {
-    return FirebaseFirestore.instance
+  static Future<List<Product>> getNewProducts() async {
+    final querySnapshot = await FirebaseFirestore.instance
         .collection('products')
-        .where("category", isNull: false)
-        .snapshots()
-        .map((snapshot) =>
-        snapshot.docs.map((doc) =>
-        doc.data()['category'] as String
-        ).toSet().toList());
+        .where("section", isEqualTo: 'new')
+        .get();
+    return querySnapshot.docs
+        .map((doc) => Product.fromJson(doc.data()))
+        .toList();
   }
 
-  static Stream<List<Product>> getProductsFromCategory(String category) {
-    return FirebaseFirestore.instance.collection('products').where(
-        'category', isEqualTo: category).snapshots().map((snapshot) => snapshot.docs.map((doc) =>
-    Product.fromJson(doc.data())).toList());
+  static Future<List<String>> getAllCategoriesFromProducts() async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('products')
+        .get();
+
+    List<String> categoryList = querySnapshot.docs
+        .map((doc) => doc.get('category') as String)
+        .toSet()
+        .toList();
+
+    return categoryList;
   }
+
+
+
+  static Future<List<Product>> getProductsFromCategory(String category) async {
+    final querySnapshot = await FirebaseFirestore.instance
+        .collection('products')
+        .where("category", isEqualTo: category)
+        .get();
+    return querySnapshot.docs
+        .map((doc) => Product.fromJson(doc.data()))
+        .toList();
+  }
+
+
+
+
 }
