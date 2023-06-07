@@ -204,10 +204,30 @@ class _CatalogPageState extends State<CatalogPage> {
                 }
 
                 if(selectedTileIndex == 3){
-                  data!.sort((a, b) => a.price.compareTo(b.price),);
+                  if(data!.every((element) => element.discount == 0
+                  )){
+                    data!.sort((a, b) => a.price.compareTo(b.price),);
+                  }else if(data!.every((element) => element.discount != 0)){
+                    data!.sort((a,b) {
+                      double priceAfterDiscountOfA = (a.price - a.discount).toDouble();
+                      double priceAfterDiscountOfB = (b.price - b.discount).toDouble();
+                     return priceAfterDiscountOfA.compareTo(priceAfterDiscountOfB);
+
+                    });
+                  }
                 }
                 if(selectedTileIndex == 4){
-                  data!.sort((a,b) => b.price.compareTo(a.price));
+                  if(data!.every((element) => element.discount == 0
+                  )){
+                    data!.sort((a, b) => b.price.compareTo(a.price),);
+                  }else if(data!.every((element) => element.discount != 0)){
+                    data!.sort((a,b) {
+                      double priceAfterDiscountOfA = (a.price - a.discount).toDouble();
+                      double priceAfterDiscountOfB = (b.price - b.discount).toDouble();
+                      return priceAfterDiscountOfB.compareTo(priceAfterDiscountOfA);
+
+                    });
+                  }
                 }
                 return Padding(
                   padding: EdgeInsets.only(top: 16.h),
