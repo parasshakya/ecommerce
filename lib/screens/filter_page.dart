@@ -1,3 +1,4 @@
+import 'package:ecommerce/providers/brand_provider.dart';
 import 'package:ecommerce/widgets/brand_container.dart';
 import 'package:ecommerce/widgets/colors_container.dart';
 import 'package:ecommerce/widgets/custom_app_bar.dart';
@@ -6,6 +7,7 @@ import 'package:ecommerce/widgets/size_container.dart';
 import 'package:ecommerce/widgets/sub_category_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class FilterPage extends StatefulWidget {
   const FilterPage({Key? key}) : super(key: key);
@@ -15,10 +17,13 @@ class FilterPage extends StatefulWidget {
 }
 
 class _FilterPageState extends State<FilterPage> {
+
   RangeValues _values = const RangeValues(0, 100);
 
   @override
   Widget build(BuildContext context) {
+
+
     RangeLabels _rangeLabels =
         RangeLabels(_values.start.toString(), _values.end.toString());
 

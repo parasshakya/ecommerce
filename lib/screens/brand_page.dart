@@ -8,14 +8,20 @@ import 'package:provider/provider.dart';
 import '../providers/brand_provider.dart';
 import '../widgets/brand_page_component.dart';
 
-class BrandPage extends StatelessWidget {
+class BrandPage extends StatefulWidget {
+
 
 
   const BrandPage({Key? key}) : super(key: key);
 
   @override
+  State<BrandPage> createState() => _BrandPageState();
+}
+
+class _BrandPageState extends State<BrandPage> {
+
+  @override
   Widget build(BuildContext context) {
-    final brandProvider = Provider.of<BrandProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -68,11 +74,11 @@ class BrandPage extends StatelessWidget {
               SizedBox(
                 height: 24.h,
               ),
-              ListView.builder(
+              Consumer<BrandProvider>(builder: (context, value, child) => ListView.builder(
                 shrinkWrap: true,
-                itemBuilder: (context, index) => BrandPageContainer(index: index, brandName: brandProvider.brands[index]),
-                itemCount: brandProvider.brands.length,
-              ),
+                itemBuilder: (context, index) => BrandPageContainer(index: index, brandName: value.brands[index]),
+                itemCount: value.brands.length,
+              ) ,)
             ],
           ),
           Align(

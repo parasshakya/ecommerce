@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
+import '../providers/brand_provider.dart';
 import '../screens/brand_page.dart';
 
 class BrandContainer extends StatelessWidget {
@@ -25,10 +27,12 @@ class BrandContainer extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('Brand'),
-                  Text('adidas Originals, Jack & Jones, s.Oliver', style: TextStyle(
-                      fontSize: 11.sp,
-                      color: Colors.grey
-                  ),),
+                  Consumer<BrandProvider>(
+                    builder: (context, value, child) => Text(value.brands.join(','), style: TextStyle(
+                        fontSize: 11.sp,
+                        color: Colors.grey
+                    ),),
+                  )
                 ],
               ),
               Icon(Icons.arrow_forward_ios_sharp, size: 24.sp,),

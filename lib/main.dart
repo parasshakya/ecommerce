@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
       designSize: const Size(375, 812),
       splitScreenMode: true,
       builder: (context, child) =>  MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Ecommerce App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.grey.shade200,

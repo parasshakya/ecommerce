@@ -6,10 +6,17 @@ class BrandProvider extends ChangeNotifier {
 
   List<String> get brands => _brands;
 
-  void setBrand(String brand) {
 
+
+  void setBrand(String brand) {
     _brands.add(brand);
+    _brands = _brands.toSet().toList();
     notifyListeners();
   }
 
+  void emptyBrand(){
+    _brands=[];
+
+    notifyListeners();
+  }
 }

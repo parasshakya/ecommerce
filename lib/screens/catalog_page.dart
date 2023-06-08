@@ -26,6 +26,7 @@ class _CatalogPageState extends State<CatalogPage> {
 
 
 
+
   List<String> sortTextList = [
     'Popular',
     'Newest',
@@ -35,13 +36,19 @@ class _CatalogPageState extends State<CatalogPage> {
   ];
   int selectedTileIndex = -1;
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    context.read<BrandProvider>().emptyBrand();
+  }
+
 
   @override
   Widget build(BuildContext context) {
 
-    final productProvider = Provider.of<ProductProvider>(context);
+    final brandProvider = Provider.of<BrandProvider>(context);
 
-    final listOfProductsInCategory = productProvider.listOfAllProducts.where((element) => element.category == widget.category);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -53,6 +60,7 @@ class _CatalogPageState extends State<CatalogPage> {
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
+
             Navigator.pop(context);
           },
           icon: const Icon(Icons.arrow_back_ios_new),
@@ -205,6 +213,8 @@ class _CatalogPageState extends State<CatalogPage> {
         child: FutureBuilder<List<Product>>(
             future: ProductProvider.getProductsFromCategory(widget.category),
             builder: (context, snapshot) {
+
+
               if (snapshot.hasData) {
                 final data = snapshot!.data;
 
@@ -264,6 +274,8 @@ class _CatalogPageState extends State<CatalogPage> {
                             mainAxisExtent: 260.h),
                         itemBuilder: (context, index) {
 
+
+                          brandProvider.setBrand(data![index].brand);
                           return ProductCard(product: data![index]);
                         },
                         itemCount: data!.length,
