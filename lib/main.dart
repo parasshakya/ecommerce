@@ -1,3 +1,6 @@
+import 'package:ecommerce/providers/brand_provider.dart';
+import 'package:ecommerce/providers/category_provider.dart';
+import 'package:ecommerce/providers/price_range_provider.dart';
 import 'package:ecommerce/providers/product_provider.dart';
 import 'package:ecommerce/screens/auth_page.dart';
 import 'package:ecommerce/themes.dart';
@@ -16,11 +19,15 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]).then((value) => runApp(MyApp()));
-  runApp(MyApp());
+
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (context) => ProductProvider(),),
+    ChangeNotifierProvider(create: (context) => CategoryProvider(),),
+    ChangeNotifierProvider(create: (context) => BrandProvider(),),
+    ChangeNotifierProvider(create: (context) => PriceRangeProvider(),),
+  ],
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {

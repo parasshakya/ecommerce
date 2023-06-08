@@ -1,14 +1,22 @@
+import 'package:ecommerce/providers/category_provider.dart';
+import 'package:ecommerce/providers/product_provider.dart';
 import 'package:ecommerce/widgets/filterPageBottomContainer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
+import '../providers/brand_provider.dart';
 import '../widgets/brand_page_component.dart';
 
 class BrandPage extends StatelessWidget {
+
+
   const BrandPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final brandProvider = Provider.of<BrandProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Brand'),
@@ -62,8 +70,8 @@ class BrandPage extends StatelessWidget {
               ),
               ListView.builder(
                 shrinkWrap: true,
-                itemBuilder: (context, index) => BrandPageContainer(index: index),
-                itemCount: 10,
+                itemBuilder: (context, index) => BrandPageContainer(index: index, brandName: brandProvider.brands[index]),
+                itemCount: brandProvider.brands.length,
               ),
             ],
           ),

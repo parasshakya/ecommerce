@@ -13,9 +13,10 @@ class Product {
   final String subCategory;
   final String brand;
   final String color;
+  final num? priceAfterDiscount;
 
   Product(
-      {required this.color, required this.brand, required this.subCategory, required this.size, required this.section, required this.id, required this.name, required this.imageUrl, required this.category, required this.discount, required this.price, required this.rating, required this.reviews});
+      {this.priceAfterDiscount,required this.color, required this.brand, required this.subCategory, required this.size, required this.section, required this.id, required this.name, required this.imageUrl, required this.category, required this.discount, required this.price, required this.rating, required this.reviews});
 
   factory Product.fromJson(Map<String, dynamic> json){
 
@@ -32,7 +33,8 @@ class Product {
       size: json['size'] as String ,
       subCategory:  json['subCategory'] as String  ,
       brand: json['brand']  as String ,
-      color: json['color'] as String
+      color: json['color'] as String,
+      priceAfterDiscount: json['discount'] != 0 ? json['price'] - json['discount'] : json["price"]
 
 
     );

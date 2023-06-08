@@ -91,7 +91,7 @@ class _FilterPageState extends State<FilterPage> {
              SizeContainer(),
               Padding(
                 padding: EdgeInsets.only(left: 16.w, top: 14.h, bottom: 12.h),
-                child: Text("Category"),
+                child: Text("Sub-Category"),
               ),
               SubCategoryContainer(),
 

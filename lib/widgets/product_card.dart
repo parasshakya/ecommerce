@@ -114,7 +114,7 @@ class ProductCard extends StatelessWidget {
                     children: [
                       TextSpan(text: '${product.price}\$', style: TextStyle(decoration: TextDecoration.lineThrough, fontSize: 14.sp, color: Colors.grey,
                       )),
-                      TextSpan(text: '${(product.price - product.discount)}\$', style: TextStyle(fontSize: 14.sp, color: Colors.red.shade800)),
+                      TextSpan(text: '${product.priceAfterDiscount}\$', style: TextStyle(fontSize: 14.sp, color: Colors.red.shade800)),
                     ]
                   ), ),
                   if(product.discount == 0) Text('${product.price}\$', style: TextStyle(

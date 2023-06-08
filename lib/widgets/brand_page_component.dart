@@ -2,14 +2,22 @@ import 'package:flutter/material.dart';
 
 class BrandPageContainer extends StatefulWidget {
   int index;
+  final String brandName;
 
-  BrandPageContainer({required this.index});
+  BrandPageContainer({required this.index, required this.brandName});
+
+
 
   @override
   State<BrandPageContainer> createState() => _BrandPageContainerState();
 }
 
 class _BrandPageContainerState extends State<BrandPageContainer> {
+
+
+
+
+
   int  _selectedIndex = -1;
 
   @override
@@ -31,7 +39,7 @@ class _BrandPageContainerState extends State<BrandPageContainer> {
         trailing: _selectedIndex == widget.index ?
             Icon(Icons.check_box, color: Colors.red.shade800,)
             : Icon(Icons.check_box_outline_blank_outlined),
-        leading: Text("Brand Name", style: TextStyle(color: _selectedIndex == widget.index ? Colors.red.shade800 : Colors.black),),
+        leading: Text(widget.brandName, style: TextStyle(color: _selectedIndex == widget.index ? Colors.red.shade800 : Colors.black),),
       ),
     );
   }

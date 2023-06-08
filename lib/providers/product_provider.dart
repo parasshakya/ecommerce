@@ -5,9 +5,28 @@ import 'package:flutter/material.dart';
 import '../models/product.dart';
 import '../widgets/product_card.dart';
 
-class ProductProvider  {
+class ProductProvider extends ChangeNotifier {
 
-  List<Product> _listOfProductsFromCategory = [];
+  List<Product> _listOfAllProducts = [];
+
+
+  List<Product> get listOfAllProducts => _listOfAllProducts;
+
+
+   Future<void> getAllProducts() async {
+
+    final querySnapshot = await FirebaseFirestore.instance
+        .collection('products')
+        .get();
+    _listOfAllProducts = querySnapshot.docs
+        .map((doc) => Product.fromJson(doc.data()))
+        .toList();
+    notifyListeners();
+
+
+  }
+
+
 
 
 

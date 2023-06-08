@@ -1,10 +1,14 @@
+import 'package:ecommerce/providers/brand_provider.dart';
+import 'package:ecommerce/providers/category_provider.dart';
 import 'package:ecommerce/providers/product_provider.dart';
 import 'package:ecommerce/widgets/filter.dart';
 import 'package:ecommerce/widgets/product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 import '../models/product.dart';
+import '../providers/price_range_provider.dart';
 import '../widgets/custom_button.dart';
 import 'filter_page.dart';
 
@@ -18,6 +22,10 @@ class CatalogPage extends StatefulWidget {
 }
 
 class _CatalogPageState extends State<CatalogPage> {
+
+
+
+
   List<String> sortTextList = [
     'Popular',
     'Newest',
@@ -27,8 +35,14 @@ class _CatalogPageState extends State<CatalogPage> {
   ];
   int selectedTileIndex = -1;
 
+
   @override
   Widget build(BuildContext context) {
+
+    final productProvider = Provider.of<ProductProvider>(context);
+
+    final listOfProductsInCategory = productProvider.listOfAllProducts.where((element) => element.category == widget.category);
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -62,17 +76,18 @@ class _CatalogPageState extends State<CatalogPage> {
                           return ListView.builder(
                             itemCount: data!.length,
                             scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) => Padding(
-                              padding: EdgeInsets.only(left: 7.w),
-                              child: CustomButton(
-                                buttonText: data![index],
-                                buttonHeight: 30.h,
-                                buttonWidth: 100.w,
-                                onPressed: () {},
-                                backgroundColor: Colors.black,
-                                padding: EdgeInsets.all(10.sp),
-                              ),
-                            ),
+                            itemBuilder: (context, index) =>
+                                Padding(
+                                  padding: EdgeInsets.only(left: 7.w),
+                                  child: CustomButton(
+                                    buttonText: data![index],
+                                    buttonHeight: 30.h,
+                                    buttonWidth: 100.w,
+                                    onPressed: () {},
+                                    backgroundColor: Colors.black,
+                                    padding: EdgeInsets.all(10.sp),
+                                  ),
+                                ),
                           );
                         } else if (snapshot.hasError) {
                           return Center(
@@ -96,8 +111,9 @@ class _CatalogPageState extends State<CatalogPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       GestureDetector(
-                        onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => FilterPage()));
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(
+                              builder: (context) => FilterPage()));
                         },
                         child: SizedBox(
                           height: 24.h,
@@ -126,28 +142,30 @@ class _CatalogPageState extends State<CatalogPage> {
                                   top: Radius.circular(20)),
                             ),
                             context: context,
-                            builder: (context) => Container(
-                              height: 400.h,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  SizedBox(
-                                    height: 36.h,
+                            builder: (context) =>
+                                Container(
+                                  height: 400.h,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment
+                                        .center,
+                                    children: [
+                                      SizedBox(
+                                        height: 36.h,
+                                      ),
+                                      Text('Sort by'),
+                                      SizedBox(
+                                        height: 33.h,
+                                      ),
+                                      ListView.builder(
+                                        shrinkWrap: true,
+                                        itemBuilder: (context, index) =>
+                                            buildListTile(
+                                                sortTextList[index], index),
+                                        itemCount: sortTextList.length,
+                                      )
+                                    ],
                                   ),
-                                  Text('Sort by'),
-                                  SizedBox(
-                                    height: 33.h,
-                                  ),
-                                  ListView.builder(
-                                    shrinkWrap: true,
-                                    itemBuilder: (context, index) =>
-                                        buildListTile(
-                                            sortTextList[index], index),
-                                    itemCount: sortTextList.length,
-                                  )
-                                ],
-                              ),
-                            ),
+                                ),
                           );
                         },
                         child: SizedBox(
@@ -190,68 +208,77 @@ class _CatalogPageState extends State<CatalogPage> {
               if (snapshot.hasData) {
                 final data = snapshot!.data;
 
-                if(selectedTileIndex == 0){
+                if (selectedTileIndex == 0) {
                   data!.sort((a, b) => b.rating.compareTo(a.rating),);
-
                 }
 
-                if(selectedTileIndex == 1){
+                if (selectedTileIndex == 1) {
                   data!.sort((a, b) => b.id.compareTo(a.id),);
                 }
 
-                if(selectedTileIndex == 2){
-                  data!.sort((a, b) => b.reviews.length.compareTo(a.reviews.length),);
+                if (selectedTileIndex == 2) {
+                  data!.sort((a, b) =>
+                      b.reviews.length.compareTo(a.reviews.length),);
                 }
 
-                if(selectedTileIndex == 3){
-                  if(data!.every((element) => element.discount == 0
-                  )){
+                if (selectedTileIndex == 3) {
+                  if (data!.every((element) => element.discount == 0
+                  )) {
                     data!.sort((a, b) => a.price.compareTo(b.price),);
-                  }else if(data!.every((element) => element.discount != 0)){
-                    data!.sort((a,b) {
-                      double priceAfterDiscountOfA = (a.price - a.discount).toDouble();
-                      double priceAfterDiscountOfB = (b.price - b.discount).toDouble();
-                     return priceAfterDiscountOfA.compareTo(priceAfterDiscountOfB);
+                  } else if (data!.every((element) => element.discount != 0)) {
+                    data!.sort((a, b) {
 
+                      return a.priceAfterDiscount!.toDouble().compareTo(b.priceAfterDiscount!.toDouble());
                     });
-                  }
-                }
-                if(selectedTileIndex == 4){
-                  if(data!.every((element) => element.discount == 0
-                  )){
-                    data!.sort((a, b) => b.price.compareTo(a.price),);
-                  }else if(data!.every((element) => element.discount != 0)){
-                    data!.sort((a,b) {
-                      double priceAfterDiscountOfA = (a.price - a.discount).toDouble();
-                      double priceAfterDiscountOfB = (b.price - b.discount).toDouble();
-                      return priceAfterDiscountOfB.compareTo(priceAfterDiscountOfA);
+                  } else {
 
-                    });
-                  }
+                     data.sort((a, b) => a.priceAfterDiscount!.compareTo(b.priceAfterDiscount!),);
+
+
+                        }
+                        }
+                        if(selectedTileIndex == 4)
+                    {
+                      if (data!.every((element) => element.discount == 0
+                      )) {
+                        data!.sort((a, b) => b.price.compareTo(a.price),);
+                      } else if (data!.every((element) => element.discount != 0)) {
+                        data!.sort((a, b) {
+
+                          return b.priceAfterDiscount!.compareTo(a.priceAfterDiscount!);
+                        });
+                      } else {
+
+                        data.sort((a, b) => b.priceAfterDiscount!.compareTo(a.priceAfterDiscount!),);
+
+
+                      }
+                    }
+                    return Padding(
+                      padding: EdgeInsets.only(top: 16.h),
+                      child: GridView.builder(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 20.h,
+                            crossAxisSpacing: 1.w,
+                            mainAxisExtent: 260.h),
+                        itemBuilder: (context, index) {
+
+                          return ProductCard(product: data![index]);
+                        },
+                        itemCount: data!.length,
+                      ),
+                    );
+                  } else if (snapshot.hasError) {
+                  return Center(
+                    child: Text('Error: ${snapshot.error}'),
+                  );
+                } else {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
                 }
-                return Padding(
-                  padding: EdgeInsets.only(top: 16.h),
-                  child: GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        mainAxisSpacing: 20.h,
-                        crossAxisSpacing: 1.w,
-                        mainAxisExtent: 260.h),
-                    itemBuilder: (context, index) {
-                       return ProductCard(product: data![index]); },
-                    itemCount: data!.length,
-                  ),
-                );
-              } else if (snapshot.hasError) {
-                return  Center(
-                  child: Text('Error: ${snapshot.error}'),
-                );
-              } else {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-            }),
+              }),
       ),
     );
   }
@@ -275,4 +302,8 @@ class _CatalogPageState extends State<CatalogPage> {
       ),
     );
   }
+
+
+
 }
+

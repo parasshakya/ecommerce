@@ -45,6 +45,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final productProvider = Provider.of<ProductProvider>(context);
+    productProvider.getAllProducts();
     return Scaffold(
 
       body: RefreshIndicator(
@@ -99,24 +101,24 @@ class _HomePageState extends State<HomePage> {
 
             SliverToBoxAdapter(
               child: FutureBuilder<List<Product>>(
-                future: _productsOnSaleFuture,
-                builder: (context, snapshot) {
-                  if(snapshot.hasData){
-                    final data = snapshot.data;
-                    final listOfProductCards = data!.map((e) => ProductCard(product: e,)).toList();
-                    return Section(
-                      title: "Sale",
-                      subtitle: "Hurry up and buy",
-                      children: listOfProductCards,
-                    );
-                  }else if (snapshot.hasError){
-                    return  Center(child: Text("Error: ${snapshot.error}"),);
-                  }else{
-                    return const Center(child: CircularProgressIndicator(),);
-                  }
+                  future: _productsOnSaleFuture,
+                  builder: (context, snapshot) {
+                    if(snapshot.hasData){
+                      final data = snapshot.data;
+                      final listOfProductCards = data!.map((e) => ProductCard(product: e,)).toList();
+                      return Section(
+                        title: "Sale",
+                        subtitle: "Super summer sale",
+                        children: listOfProductCards,
+                      );
+                    }else if (snapshot.hasError){
+                      return  Center(child: Text('Error: ${snapshot.error}'),);
+                    }else{
+                      return const Center(child: CircularProgressIndicator(),);
+                    }
 
-                }
-              ),
+                  }
+              )
             ),
             SliverToBoxAdapter(
               child: SizedBox(
@@ -134,7 +136,7 @@ class _HomePageState extends State<HomePage> {
                       final listOfProductCards = data!.map((e) => ProductCard(product: e,)).toList();
                       return Section(
                         title: "New",
-                        subtitle: "All new designs",
+                        subtitle: "You've never seen it before",
                         children: listOfProductCards,
                       );
                     }else if (snapshot.hasError){
@@ -145,6 +147,25 @@ class _HomePageState extends State<HomePage> {
 
                   }
               ),
+            ),
+            SliverToBoxAdapter(
+              child: SizedBox(
+                height: 40.h,
+
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: Consumer<ProductProvider>(
+                builder: (context, value, child) {
+
+                  final listOfAllProductCards = value.listOfAllProducts.map((e) => ProductCard(product: e,)).toList();
+                  return Section(
+                    title: "All Products",
+                    subtitle: "A list of all products",
+                    children: listOfAllProductCards,
+                  );
+                },
+              )
             ),
           ],
           // child: Column(
